@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -13,17 +14,17 @@ import (
 var validate = validator.New()
 
 func (h *Handler) CreateBudget(w http.ResponseWriter, r *http.Request) {
-	amountStr := r.URL.Query().Get("amount")
+	amountStr := strings.TrimSpace(r.URL.Query().Get("amount"))
 	amount, err := strconv.ParseFloat(amountStr, 64)
 	if err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
 		return
 	}
 	budget := models.CreateBudget{
-		UserID:  r.URL.Query().Get("userID"),
-		Name:    r.URL.Query().Get("name"),
+		UserID:  strings.TrimSpace(r.URL.Query().Get("userID")),
+		Name:    strings.TrimSpace(r.URL.Query().Get("name")),
 		Amount:  amount,
-		EndTime: r.URL.Query().Get("end_date"),
+		EndTime: strings.TrimSpace(r.URL.Query().Get("end_date")),
 	}
 	if err := validate.Struct(budget); err != nil {
 		http.Error(w, "Validation failed: "+err.Error(), http.StatusBadRequest)
@@ -39,7 +40,7 @@ func (h *Handler) CreateBudget(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) GetBudgetList(w http.ResponseWriter, r *http.Request) {
-	userID := r.URL.Query().Get("userID")
+	userID := strings.TrimSpace(r.URL.Query().Get("userID"))
 	if userID == "" {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
 		return

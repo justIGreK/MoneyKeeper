@@ -13,7 +13,7 @@ type BudgetRepository interface {
 	AddBudget(ctx context.Context, budget models.Budget) (string, error)
 	CloseBudget(ctx context.Context, budgetID string) error
 	GetBudgetList(ctx context.Context, userID string) ([]models.Budget, error)
-	GetBudget(ctx context.Context, budgetID string) (*models.Budget, error)
+	GetBudget(ctx context.Context, userID, budgetID string) (*models.Budget, error)
 }
 
 type BudgetService struct {

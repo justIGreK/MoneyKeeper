@@ -17,6 +17,7 @@ const (
 	userCollection = "users"
 	budgetCollection = "budgets"
 	transactionCollection = "transactions"
+	reportCollection = "reports"
 )
 
 func CreateMongoClient(ctx context.Context) *mongo.Client {

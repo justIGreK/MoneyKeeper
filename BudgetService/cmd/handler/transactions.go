@@ -6,10 +6,11 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func (h *Handler) CreateTransaction(w http.ResponseWriter, r *http.Request) {
-	costStr := r.URL.Query().Get("cost")
+	costStr := strings.TrimSpace(r.URL.Query().Get("cost"))
 	cost, err := strconv.ParseFloat(costStr, 64)
 
 	if err != nil {
@@ -17,9 +18,9 @@ func (h *Handler) CreateTransaction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tx := models.CreateTransaction{
-		Category: r.URL.Query().Get("category"),
-		UserID:   r.URL.Query().Get("userID"),
-		Name:     r.URL.Query().Get("name"),
+		Category: strings.TrimSpace(r.URL.Query().Get("category")),
+		UserID:   strings.TrimSpace(r.URL.Query().Get("userID")),
+		Name:     strings.TrimSpace(r.URL.Query().Get("name")),
 		Cost:     cost,
 	}
 	if err := validate.Struct(tx); err != nil {
@@ -48,8 +49,8 @@ func (h *Handler) CreateTransaction(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) GetTransaction(w http.ResponseWriter, r *http.Request) {
-	userID := r.URL.Query().Get("userID")
-	txID := r.URL.Query().Get("txID")
+	userID := strings.TrimSpace(r.URL.Query().Get("userID"))
+	txID := strings.TrimSpace(r.URL.Query().Get("txID"))
 
 	tx, err := h.TxSRV.GetTransaction(r.Context(), txID, userID)
 	if err != nil {
@@ -69,7 +70,7 @@ func (h *Handler) GetTransaction(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) GetTransactionList(w http.ResponseWriter, r *http.Request) {
-	userID := r.URL.Query().Get("userID")
+	userID := strings.TrimSpace(r.URL.Query().Get("userID"))
 
 	txs, err := h.TxSRV.GetAllTransactions(r.Context(), userID)
 	if err != nil {
@@ -89,10 +90,10 @@ func (h *Handler) GetTransactionList(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) GetTXByTimeFrame(w http.ResponseWriter, r *http.Request) {
-	userID := r.URL.Query().Get("userID")
+	userID := strings.TrimSpace(r.URL.Query().Get("userID"))
 	timeFrame := models.CreateTimeFrame{
-		StartDate: r.URL.Query().Get("start"),
-		EndDate: r.URL.Query().Get("end"),
+		StartDate: strings.TrimSpace(r.URL.Query().Get("start")),
+		EndDate:   strings.TrimSpace(r.URL.Query().Get("end")),
 	}
 	txs, err := h.TxSRV.GetTXByTimeFrame(r.Context(), userID, timeFrame)
 	if err != nil {

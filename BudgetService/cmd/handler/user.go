@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	user := models.User{
-		Name: r.URL.Query().Get("name"),
+		Name: strings.TrimSpace(r.URL.Query().Get("name")),
 	}
 	if user.Name == "" {
 		http.Error(w, "invalid name", http.StatusBadRequest)
@@ -24,7 +25,7 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) GetUser(w http.ResponseWriter, r *http.Request) {
-	userID := r.URL.Query().Get("userID")
+	userID := strings.TrimSpace(r.URL.Query().Get("userID"))
 	user, err := h.UserSRV.GetUser(r.Context(), userID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)

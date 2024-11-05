@@ -24,14 +24,20 @@ type TransactionService interface{
 	GetTXByTimeFrame(ctx context.Context, userID string, timeframe models.CreateTimeFrame) ([]models.Transaction, error) 
 }
 
+type ReportService interface{
+	GetPeriodSummary(ctx context.Context, userID, period string) (*models.ReportResponse, error)
+	GetBudgetReport(ctx context.Context, userID, budgetID string) (*models.BudgetReport, error) 
+}
+
 type Handler struct {
 	UserSRV UserService
 	BudgetSRV BudgetService
 	TxSRV TransactionService
+	ReportSRV ReportService
 }
 
-func NewHandler(user UserService, budget BudgetService, tx TransactionService) *Handler {
-	return &Handler{UserSRV: user, BudgetSRV: budget, TxSRV: tx}
+func NewHandler(user UserService, budget BudgetService, tx TransactionService, report ReportService) *Handler {
+	return &Handler{UserSRV: user, BudgetSRV: budget, TxSRV: tx, ReportSRV: report}
 }
 
 func (h *Handler) InitRoutes() *chi.Mux {
@@ -49,6 +55,10 @@ func (h *Handler) InitRoutes() *chi.Mux {
 		r.Get("/get", h.GetTransaction)
 		r.Get("/getlist", h.GetTransactionList)
 		r.Get("/getbytf", h.GetTXByTimeFrame)
+	})
+	r.Route("/report", func(r chi.Router){
+		r.Get("/getsummary", h.GetSummaryReport)
+		r.Get("/budgetreport", h.GetBudgetReport)
 	})
 	return r
 }

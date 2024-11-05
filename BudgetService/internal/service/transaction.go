@@ -27,6 +27,10 @@ func NewTransactionService(transRepo TransactionRepository, userRepo UserReposit
 		UserRepo: userRepo, BudgetRepo: budgetRepo}
 }
 
+const (
+	NoCategory = "other"
+)
+
 func (s *TransactionService) AddTransaction(ctx context.Context, transaction models.CreateTransaction) ([]string, error) {
 	user, err := s.UserRepo.GetUser(ctx, transaction.UserID)
 	if err != nil {
@@ -35,6 +39,9 @@ func (s *TransactionService) AddTransaction(ctx context.Context, transaction mod
 	}
 	if user == nil {
 		return nil, errors.New("user not found")
+	}
+	if transaction.Category == "" {
+		transaction.Category = NoCategory
 	}
 	createTransaction := models.Transaction{
 		UserID:   transaction.UserID,

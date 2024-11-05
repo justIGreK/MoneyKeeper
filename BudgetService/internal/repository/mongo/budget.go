@@ -28,13 +28,13 @@ func (r *BudgetRepo) AddBudget(ctx context.Context, budget models.Budget) (strin
 	return result.InsertedID.(primitive.ObjectID).Hex(), nil
 }
 
-func (r *BudgetRepo) GetBudget(ctx context.Context, budgetID string) (*models.Budget, error) {
+func (r *BudgetRepo) GetBudget(ctx context.Context, userID, budgetID string) (*models.Budget, error) {
 	oid, err := convertToObjectIDs(budgetID)
 	if err != nil {
 		return nil, fmt.Errorf("InvalidID: %v", err)
 	}
 	var budget models.Budget
-	err = r.collection.FindOne(ctx, bson.M{"_id": oid[0]}).Decode(&budget)
+	err = r.collection.FindOne(ctx, bson.M{"_id": oid[0], "user_id": userID}).Decode(&budget)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, nil
