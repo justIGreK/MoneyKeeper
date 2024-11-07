@@ -1,21 +1,43 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 
-	"github.com/justIGreK/MoneyKeeper/BudgetServiceContract/go/_go"
+	grpchandler "budget/cmd/grpcServer/grpcHandler"
+	mongorep "budget/internal/repository/mongo"
+	"budget/internal/service"
+	
 )
-
 func main() {
+	ctx := context.Background()
+	client := mongorep.CreateMongoClient(ctx)
+	userRepo := mongorep.NewUserRepository(client)
+	budgetRepo := mongorep.NewBudgetRepository(client)
+	txRepo := mongorep.NewTransactionRepository(client)
+	reportRepo := mongorep.NewReportRepository(client)
 
-	listener, err := net.Listen("tcp", ":50051")
+	userSRV := service.NewUserService(userRepo)
+	budgetSRV := service.NewBudgetService(budgetRepo, userRepo)
+	txSRV := service.NewTransactionService(txRepo, userRepo, budgetRepo)
+	reportSRV := service.NewReportService(reportRepo, txRepo, budgetRepo, userRepo)
+	lis, err := net.Listen("tcp", ":50052")
 	if err != nil {
-		log.Fatalf("Failed to listen on port 50051: %v", err)
+		log.Fatalf("failed to listen: %v", err)
 	}
 
 	grpcServer := grpc.NewServer()
 
+	handler := grpchandler.NewGrpcHandler(grpcServer, userSRV, budgetSRV, txSRV, reportSRV)
+	handler.RegisterServices()
+	reflection.Register(grpcServer)
+
+	log.Printf("Starting gRPC server on :50052")
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 }

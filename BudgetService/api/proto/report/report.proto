@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+
+package report;
+
+option go_package = "proto;report";
+
+service ReportService {
+  rpc GetSummaryReport(GetSummaryReportRequest) returns (GetSummaryReportResponse);
+  rpc GetBudgetReport(GetBudgetReportRequest) returns (GetBudgetReportResponse);
+}
+
+message GetSummaryReportRequest {
+  string user_id = 1;
+  string period = 2;
+}
+
+message GetSummaryReportResponse {
+  ReportResponse report = 1;
+}
+
+message GetBudgetReportRequest {
+  string user_id = 1;
+  string budget_id = 2;
+}
+
+message GetBudgetReportResponse {
+  BudgetReport report = 1;
+}
+
+message ReportResponse {
+    string user_id = 1;
+    string period = 2;
+    float total_spent = 3;
+    int32 transaction_count = 4;
+    repeated CategoryReport categories = 5;
+}
+
+message CategoryReport {
+    string name = 1;
+    float total = 2;
+    int32 count = 3;
+}
+
+message BudgetReport {
+    float total_spent = 1;
+    bool budget_exceeded = 2;
+    int32 failed_days = 3;
+    int32 successful_days = 4;
+    Transaction most_expensive = 5;
+    string most_frequent = 6;
+}
+
+message Transaction {
+  string id = 1;
+  string user_id = 2;
+  string category = 3;
+  string name = 4;
+  float cost = 5;
+  string date = 6;
+}

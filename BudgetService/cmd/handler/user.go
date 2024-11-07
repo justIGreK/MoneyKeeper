@@ -21,7 +21,13 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(id)
+	if err != nil {
+		log.Println("failed to encode JSON: %v", err)
+		http.Error(w, "Failed to encode JSON response", http.StatusInternalServerError)
+		return
+	}
 }
 
 func (h *Handler) GetUser(w http.ResponseWriter, r *http.Request) {

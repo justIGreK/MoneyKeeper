@@ -5,23 +5,21 @@ import (
 	"errors"
 	"log"
 
-	"os"
-
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const (
-	dbname         = "budgetdb"
-	userCollection = "users"
-	budgetCollection = "budgets"
+	dbname                = "budgetdb"
+	userCollection        = "users"
+	budgetCollection      = "budgets"
 	transactionCollection = "transactions"
-	reportCollection = "reports"
+	reportCollection      = "reports"
 )
 
 func CreateMongoClient(ctx context.Context) *mongo.Client {
-	dbURI := os.Getenv("MONGO_URI")
+	dbURI := "mongodb://localhost:27088"
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(dbURI))
 	if err != nil {
 		log.Fatalf("Failed to create MongoDB client: %v", err)

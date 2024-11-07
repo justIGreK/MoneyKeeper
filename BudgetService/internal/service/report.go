@@ -92,8 +92,8 @@ func (s *ReportService) getPeriodDates(period string) (time.Time, time.Time) {
 		return start.AddDate(0, 0, -7), start
 	case "month":
 		start := now
-		return start, start.AddDate(0, -1, 0)
-	default:
+		return start.AddDate(0, -1, 0), start
+		default:
 		return time.Time{}, time.Time{}
 	}
 }

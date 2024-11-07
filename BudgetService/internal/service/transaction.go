@@ -32,6 +32,9 @@ const (
 )
 
 func (s *TransactionService) AddTransaction(ctx context.Context, transaction models.CreateTransaction) ([]string, error) {
+	if transaction.Cost < 0{
+		return nil, errors.New("cost cant be below 0")
+	}
 	user, err := s.UserRepo.GetUser(ctx, transaction.UserID)
 	if err != nil {
 		log.Println(err)
@@ -71,7 +74,6 @@ func (s *TransactionService) GetTransaction(ctx context.Context, transactionID, 
 	if user == nil {
 		return nil, errors.New("user not found")
 	}
-
 	trans, err := s.TransactionRepo.GetTransaction(ctx, transactionID, userID)
 	if err != nil {
 		log.Println(err)
@@ -89,7 +91,6 @@ func (s *TransactionService) checkLimits(ctx context.Context, userID string) ([]
 	if len(budgets) == 0 {
 		return nil, nil
 	}
-	fmt.Println("1")
 	now := time.Now().UTC()
 	CurrTframe := models.TimeFrame{
 		StartDate: time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()),
@@ -100,16 +101,13 @@ func (s *TransactionService) checkLimits(ctx context.Context, userID string) ([]
 		log.Println(err)
 		return nil, err
 	}
-	fmt.Printf("2 %v\n", txs)
 	sum := 0.0
 	for _, tx := range txs {
 		sum += tx.Cost
 	}
 	warningNotifications := []string{}
 	for _, budget := range budgets {
-		fmt.Printf("3 %v, %v \n", sum, now.Before(budget.EndDate))
 		if sum > budget.DailyAmount && now.Before(budget.EndDate) {
-			fmt.Println("4")
 			notification := fmt.Sprintf("daily budget of %v is exceeded by %v", budget.Name, sum-budget.DailyAmount)
 			warningNotifications = append(warningNotifications, notification)
 		}
@@ -149,11 +147,19 @@ func (s *TransactionService) GetTXByTimeFrame(ctx context.Context, userID string
 		tf.StartDate = time.Unix(0, 0)
 	} else {
 		tf.StartDate, err = time.Parse(Dateformat, timeframe.StartDate)
+		if err != nil{
+			log.Println(err)
+			return nil, err
+		}
 	}
 	if timeframe.EndDate == "" {
 		tf.EndDate = time.Now().AddDate(10000, 0, 0)
 	} else {
 		tf.EndDate, err = time.Parse(Dateformat, timeframe.EndDate)
+		if err != nil{
+			log.Println(err)
+			return nil, err
+		}
 	}
 
 	txs, err := s.TransactionRepo.GetTXByTimeFrame(ctx, userID, tf)

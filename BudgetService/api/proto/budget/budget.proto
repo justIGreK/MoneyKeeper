@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+
+package budget;
+
+option go_package = "proto;budget";
+
+service BudgetService{
+    rpc CreateBudget(CreateBudgetRequest) returns (CreateBudgetResponse);
+    rpc GetBudgetList(GetBudgetListRequest) returns (GetBudgetListResponse);
+}
+
+
+message CreateBudgetRequest {
+  string user_id = 1;
+  string name = 2;
+  float amount = 3;
+  string endtime = 4;
+}
+
+message CreateBudgetResponse {
+  string budget_id = 1;
+}
+
+message GetBudgetListRequest {
+  string user_id = 1;
+}
+
+message GetBudgetListResponse {
+  repeated Budget budgets = 2;
+}
+
+message Budget {
+  string id = 1;
+  string user_id = 2;
+  string name = 3;
+  float amount = 4;
+  float daily_amount = 5;
+  string start_date = 6;
+  string end_date = 7;
+  string created_at = 8;
+  string updated_at = 9;
+  bool is_active = 10;
+}

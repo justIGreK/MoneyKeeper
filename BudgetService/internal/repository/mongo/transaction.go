@@ -4,6 +4,7 @@ import (
 	"budget/internal/models"
 	"context"
 	"fmt"
+	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -33,8 +34,9 @@ func (r *TransactionRepo) GetTransaction(ctx context.Context, transactionID, use
 	if err != nil {
 		return nil, fmt.Errorf("InvalidID: %v", err)
 	}
+	log.Println(oid, userID)
 	var transaction models.Transaction
-	err = r.collection.FindOne(ctx, bson.M{"_id": oid[0], "userID": userID}).Decode(&transaction)
+	err = r.collection.FindOne(ctx, bson.M{"_id": oid[0], "user_id": userID}).Decode(&transaction)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, nil

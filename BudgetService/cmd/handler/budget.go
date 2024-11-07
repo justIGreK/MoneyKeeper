@@ -31,12 +31,18 @@ func (h *Handler) CreateBudget(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.BudgetSRV.AddBudget(r.Context(), budget)
+	id, err := h.BudgetSRV.AddBudget(r.Context(), budget)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(id)
+	if err != nil {
+		log.Println("failed to encode JSON: %v", err)
+		http.Error(w, "Failed to encode JSON response", http.StatusInternalServerError)
+		return
+	}
 }
 
 func (h *Handler) GetBudgetList(w http.ResponseWriter, r *http.Request) {

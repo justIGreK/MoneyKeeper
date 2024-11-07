@@ -13,7 +13,7 @@ type UserService interface {
 }
 
 type BudgetService interface{
-	AddBudget(ctx context.Context, budget models.CreateBudget) error
+	AddBudget(ctx context.Context, budget models.CreateBudget) (string, error)
 	GetBudgetList(ctx context.Context, userID string) ([]models.Budget, error)
 }
 

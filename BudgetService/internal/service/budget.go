@@ -29,29 +29,29 @@ const (
 	Dateformat string = "2006-01-02"
 )
 
-func (s *BudgetService) AddBudget(ctx context.Context, budget models.CreateBudget) error {
+func (s *BudgetService) AddBudget(ctx context.Context, budget models.CreateBudget)(string, error) {
 	user, err := s.UserRepo.GetUser(ctx, budget.UserID)
 	if err != nil {
 		log.Println(err)
-		return err
+		return "", err
 	}
 	if user == nil {
-		return errors.New("user not found")
+		return "", errors.New("user not found")
 	}
 	
 	endDate, err := time.Parse(Dateformat, budget.EndTime)
 	if err != nil {
 		log.Println(err)
-		return fmt.Errorf("invalid date or time format: %v", err)
+		return "", fmt.Errorf("invalid date or time format: %v", err)
 	}
 	now := time.Now().UTC()
 	if endDate.Before(now){
-		return errors.New("Past time")
+		return "", errors.New("Past time")
 	}
 	duration := endDate.Sub(now)
 	days := duration.Hours() / 24.0
 	if days < 1 {
-		return errors.New("Invalid duration")
+		return "", errors.New("Invalid duration")
 	}
 	createBudget := models.Budget{
 		UserID:      budget.UserID,
@@ -64,12 +64,12 @@ func (s *BudgetService) AddBudget(ctx context.Context, budget models.CreateBudge
 		UpdatedAt:   now,
 		IsActive:    true,
 	}
-	_, err = s.BudgetRepo.AddBudget(ctx, createBudget)
+	id, err := s.BudgetRepo.AddBudget(ctx, createBudget)
 	if err != nil {
 		log.Println(err)
-		return err
+		return "", err
 	}
-	return nil
+	return id, nil
 }
 
 func (s *BudgetService) GetBudgetList(ctx context.Context, userID string) ([]models.Budget, error) {
