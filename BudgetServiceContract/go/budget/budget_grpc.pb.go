@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: budget.proto
+// source: budget/budget.proto
 
-package _go
+package budget
 
 import (
 	context "context"
@@ -140,5 +140,5 @@ var BudgetService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "budget.proto",
+	Metadata: "budget/budget.proto",
 }

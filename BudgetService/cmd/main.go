@@ -11,6 +11,7 @@ import (
 	"os"
 	"time"
 )
+
 const (
 	RWTimeout   = 10
 	IdleTimeout = 60
@@ -42,4 +43,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("Server error", err)
 	}
+
 }

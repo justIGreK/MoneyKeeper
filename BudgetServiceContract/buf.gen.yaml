@@ -2,7 +2,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/justIGreK/BudgetServiceContract/go
+    default: github.com/justIGreK/MoneyKeeper/BudgetServiceContract/go
     except:
       - buf.build/googleapis/googleapis
 plugins:
