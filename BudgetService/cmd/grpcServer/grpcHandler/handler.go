@@ -1,10 +1,10 @@
 package grpchandler
 
 import (
-	userProto "budget/pkg/go/user"
-	budgetProto "budget/pkg/go/budget"
-	transactionProto "budget/pkg/go/transaction"
-	reportProto "budget/pkg/go/report"
+	userProto "github.com/justIGreK/MoneyKeeper/BudgetService/pkg/go/user"
+	budgetProto "github.com/justIGreK/MoneyKeeper/BudgetService/pkg/go/budget"
+	transactionProto "github.com/justIGreK/MoneyKeeper/BudgetService/pkg/go/transaction"
+	reportProto "github.com/justIGreK/MoneyKeeper/BudgetService/pkg/go/report"
 	"google.golang.org/grpc"
 )
 type GrpcHandler struct {

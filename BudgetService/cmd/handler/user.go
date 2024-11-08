@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"budget/internal/models"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/models"
 	"encoding/json"
 	"log"
 	"net/http"

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"budget/cmd/config"
-	"budget/cmd/handler"
-	mongorep "budget/internal/repository/mongo"
-	"budget/internal/service"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/cmd/config"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/cmd/handler"
+	mongorep "github.com/justIGreK/MoneyKeeper/BudgetService/internal/repository/mongo"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/service"
 	"context"
 	"log"
 	"net/http"

@@ -1,8 +1,8 @@
 package grpchandler
 
 import (
-	"budget/internal/models"
-	reportProto "budget/pkg/go/report"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/models"
+	reportProto "github.com/justIGreK/MoneyKeeper/BudgetService/pkg/go/report"
 	"context"
 )
 

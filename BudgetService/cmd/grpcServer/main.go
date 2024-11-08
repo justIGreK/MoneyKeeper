@@ -8,9 +8,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	grpchandler "budget/cmd/grpcServer/grpcHandler"
-	mongorep "budget/internal/repository/mongo"
-	"budget/internal/service"
+	grpchandler "github.com/justIGreK/MoneyKeeper/BudgetService/cmd/grpcServer/grpcHandler"
+	mongorep "github.com/justIGreK/MoneyKeeper/BudgetService/internal/repository/mongo"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/service"
 	
 )
 func main() {

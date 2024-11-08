@@ -1,7 +1,7 @@
 package service
 
 import (
-	"budget/internal/models"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/models"
 	"context"
 	"errors"
 	"log"

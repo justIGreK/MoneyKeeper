@@ -1,10 +1,10 @@
 package grpchandler
 
 import (
-	"budget/internal/models"
-	budgetProto "budget/pkg/go/budget"
+	budgetProto "github.com/justIGreK/MoneyKeeper/BudgetService/pkg/go/budget"
 	"context"
 
+	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/models"
 )
 
 type BudgetServiceServer struct {
@@ -55,15 +55,15 @@ func convertToProtoBudgets(budgets []models.Budget) []*budgetProto.Budget {
 	protoBudgets := make([]*budgetProto.Budget, len(budgets))
 	for i, b := range budgets {
 		protoBudgets[i] = &budgetProto.Budget{
-			Id:        b.ID,
-			Name:      b.Name,
-			Amount:    float32(b.Amount),
+			Id:          b.ID,
+			Name:        b.Name,
+			Amount:      float32(b.Amount),
 			DailyAmount: float32(b.DailyAmount),
-			StartDate: b.StartDate.Format(Dateformat),
-			EndDate:   b.EndDate.Format(Dateformat),
-			CreatedAt: b.CreatedAt.Format(Dateformat),
-			UpdatedAt: b.UpdatedAt.Format(Dateformat),
-			IsActive: b.IsActive,
+			StartDate:   b.StartDate.Format(Dateformat),
+			EndDate:     b.EndDate.Format(Dateformat),
+			CreatedAt:   b.CreatedAt.Format(Dateformat),
+			UpdatedAt:   b.UpdatedAt.Format(Dateformat),
+			IsActive:    b.IsActive,
 		}
 	}
 	return protoBudgets

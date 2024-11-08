@@ -1,7 +1,7 @@
 package mongorep
 
 import (
-	"budget/internal/models"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/models"
 	"context"
 
 	"go.mongodb.org/mongo-driver/bson"

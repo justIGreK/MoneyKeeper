@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Bot/cmd/config"
-	handler "Bot/cmd/handler"
+	"github.com/justIGreK/MoneyKeeper/Bot/cmd/config"
+	handler "github.com/justIGreK/MoneyKeeper/Bot/cmd/handler"
 	"log"
 	"net/http"
 	"os"

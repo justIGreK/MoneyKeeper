@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"budget/internal/models"
+	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/models"
 	"context"
 
 	"github.com/go-chi/chi/v5"

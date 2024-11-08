@@ -1,4 +1,4 @@
-module budget
+module github.com/justIGreK/MoneyKeeper/BudgetService
 
 go 1.23.2
 
