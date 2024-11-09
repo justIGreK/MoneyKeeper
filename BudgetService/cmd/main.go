@@ -24,9 +24,8 @@ func main() {
 	userRepo := mongorep.NewUserRepository(client)
 	budgetRepo := mongorep.NewBudgetRepository(client)
 	txRepo := mongorep.NewTransactionRepository(client)
-	reportRepo := mongorep.NewReportRepository(client)
 
-	reportSRV := service.NewReportService(reportRepo, txRepo, budgetRepo, userRepo)
+	reportSRV := service.NewReportService(txRepo, budgetRepo, userRepo)
 	txSRV := service.NewTransactionService(txRepo, userRepo, budgetRepo)
 	budgetSRV := service.NewBudgetService(budgetRepo, userRepo)
 	userSRV := service.NewUserService(userRepo)

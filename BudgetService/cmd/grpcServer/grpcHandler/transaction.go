@@ -56,7 +56,7 @@ func (s *TransactionServiceServer) GetTransaction(ctx context.Context, req *tran
 			Category: tx.Category,
 			Name:     tx.Name,
 			Cost:     float32(tx.Cost),
-			Date:     tx.Date.Format(Dateformat),
+			Date:     tx.Date.Format(DateTimeformat),
 		},
 	}, nil
 
@@ -83,7 +83,7 @@ func convertToProtoTxs(txs []models.Transaction) []*transactionProto.Transaction
 			Category: b.Category,
 			Name:     b.Name,
 			Cost:     float32(b.Cost),
-			Date:     b.Date.Format(Dateformat),
+			Date:     b.Date.Format(DateTimeformat),
 		}
 	}
 	return protoTxs

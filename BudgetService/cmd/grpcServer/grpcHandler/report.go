@@ -71,6 +71,6 @@ func convertToProtoBudgetReport(report *models.BudgetReport) *reportProto.Budget
 			Category: report.MostExpensive.Category,
 			Name:     report.MostExpensive.Name,
 			Cost:     float32(report.MostExpensive.Cost),
-			Date:     report.MostExpensive.Date.Format(Dateformat),
+			Date:     report.MostExpensive.Date.Format(DateTimeformat),
 		}}
 }

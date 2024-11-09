@@ -9,21 +9,15 @@ import (
 	"time"
 )
 
-type ReportRepository interface {
-
-}
 
 type ReportService struct {
-	ReportRepo  ReportRepository
 	Transaction TransactionRepository
 	BudgetRepo  BudgetRepository
 	UserRepo    UserRepository
 }
 
-func NewReportService(report ReportRepository, tx TransactionRepository,
-	budget BudgetRepository, user UserRepository) *ReportService {
-	return &ReportService{ReportRepo: report, Transaction: tx,
-		BudgetRepo: budget, UserRepo: user}
+func NewReportService(tx TransactionRepository,	budget BudgetRepository, user UserRepository) *ReportService {
+	return &ReportService{Transaction: tx, BudgetRepo: budget, UserRepo: user}
 }
 
 func (s *ReportService) GetPeriodSummary(ctx context.Context, userID, period string) (*models.ReportResponse, error) {

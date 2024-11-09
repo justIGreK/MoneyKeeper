@@ -19,12 +19,11 @@ func main() {
 	userRepo := mongorep.NewUserRepository(client)
 	budgetRepo := mongorep.NewBudgetRepository(client)
 	txRepo := mongorep.NewTransactionRepository(client)
-	reportRepo := mongorep.NewReportRepository(client)
 
 	userSRV := service.NewUserService(userRepo)
 	budgetSRV := service.NewBudgetService(budgetRepo, userRepo)
 	txSRV := service.NewTransactionService(txRepo, userRepo, budgetRepo)
-	reportSRV := service.NewReportService(reportRepo, txRepo, budgetRepo, userRepo)
+	reportSRV := service.NewReportService(txRepo, budgetRepo, userRepo)
 	lis, err := net.Listen("tcp", ":50052")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)

@@ -49,8 +49,10 @@ func (s *BudgetServiceServer) GetBudgetList(ctx context.Context, req *budgetProt
 
 }
 
-var Dateformat string = "2006-01-02T15:04:05Z"
-
+var(
+	Dateformat string = "2006-01-02"
+	DateTimeformat string = "2006-01-02T15:04:05"
+)
 func convertToProtoBudgets(budgets []models.Budget) []*budgetProto.Budget {
 	protoBudgets := make([]*budgetProto.Budget, len(budgets))
 	for i, b := range budgets {

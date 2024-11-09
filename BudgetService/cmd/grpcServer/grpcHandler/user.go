@@ -1,9 +1,10 @@
 package grpchandler
 
 import (
+	"context"
+
 	"github.com/justIGreK/MoneyKeeper/BudgetService/internal/models"
 	userProto "github.com/justIGreK/MoneyKeeper/BudgetService/pkg/go/user"
-	"context"
 )
 
 type UserServiceServer struct {
