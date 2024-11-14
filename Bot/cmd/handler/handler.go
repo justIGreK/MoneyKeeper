@@ -38,6 +38,7 @@ func NewTelegramHandler(botToken string, srv *service.Service) *TelegramHandler 
 	if err != nil {
 		log.Fatal(err)
 	}
+	
 	return &TelegramHandler{bot: bot, service: srv}
 }
 
@@ -94,11 +95,19 @@ func (h *TelegramHandler) CommandMap() map[string]CommandHandler {
 	once.Do(func() {
 		commandMapInstance = map[string]CommandHandler{
 			"/addBudget": h.service.AddBudget,
-			"/getBudgets": h.service.GetBudgetList,
+			"/addCategory": h.service.AddCategory,
+			"/delBudget" : h.service.DeleteBudget,
+			"/delCategory" : h.service.DeleteCategory,
+			"/getBudget" : h.service.GetBudget,
+			"/getBudgetList": h.service.GetBudgetList,
+			"/updateBudget" : h.service.UpdateBudget,
+			"/updateCategory" : h.service.UpdateCategory,
 			"/addTx": h.service.AddTransaction,
 			"/getTx": h.service.GetTransaction,
 			"/getTxList": h.service.GetTransactionList,
 			"/getTxsByDates": h.service.GetTXByTimeFrame,
+			"/delTx": h.service.DeleteTransaction,
+			"/updateTx": h.service.UpdateTransaction,
 			"/getSummary": h.service.GetSummary,
 			"/getBudgetReport": h.service.GetBudgetReport,
 		}

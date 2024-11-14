@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	user "github.com/justIGreK/MoneyKeeper/BudgetService/pkg/go/user"
+	user "github.com/justIGreK/MoneyKeeper-User/pkg/go/user"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

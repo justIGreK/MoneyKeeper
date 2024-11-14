@@ -1,11 +1,10 @@
 package models
 
-type ReportResponse struct {
-    UserID          string      
+type ReportResponse struct {   
     Period          string     
     TotalSpent      float32    
     TransactionCount int32   
-    Categories      []*CategoryReport 
+    Categories      []CategoryReport 
 }
 
 type CategoryReport struct {
@@ -14,11 +13,26 @@ type CategoryReport struct {
 	Count int32    
 }
 
-type BudgetReport struct{
+type RequiredCategoryReport struct {
+	Name  string
+	Total float32
+    Limit float32
+	Count int32
+}
+type BudgetReport struct {
+	BudgetName string
+	Period     string
+	LeftDays   float32
+	Limit      float32
 	TotalSpent float32
-	BudgetExceeded bool
-	FailedDays int32
-	SuccessfulDays int32
-	MostExpensive Transaction
-	MostFrequent string
+	TransactionCount int
+    RequiredCategories []RequiredCategoryReport
+	Categories       []CategoryReport
+}
+
+type DatesSummary struct{
+	UserID string
+	Period string
+	Start string
+	End string
 }

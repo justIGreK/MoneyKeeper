@@ -21,12 +21,12 @@ type UserDB interface {
 }
 
 func NewService(context context.Context, user *client.UserClient, userDB UserDB,
-	 budget *client.BudgetClient, tx *client.TransactionClient, report *client.ReportClient) *Service {
+	tx *client.TransactionClient, report *client.ReportClient, budget *client.BudgetClient) *Service {
 	return &Service{
 		ctx: context, 
 		user: user, 
 		userDB: userDB,
-		budget: budget,
+	 	budget: budget,
 		tx: tx,
 		report: report,
 	}

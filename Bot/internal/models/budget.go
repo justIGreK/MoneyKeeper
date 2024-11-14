@@ -7,18 +7,46 @@ type User struct{
 type Budget struct{
 	ID string 
 	Name string
-	Amount float32
-	DailyAmount float32
-	StartDate string
-	EndDate string
-	CreatedAt string
-	UpdatedAt string
-	IsActive bool
+	Limit float32
+	Start string
+	End string
+	Category  []Category 
 }
 
 type CreateBudget struct{
 	UserID string
 	Name string 
 	Amount float32
-	EndTime string
+	Period string
+	Start string
+	End string
+}
+
+type Category struct {
+	ID    string  
+	Name  string  
+	Limit float32 
+}
+
+type CreateCategory struct{
+	UserID string
+	BudgetID string
+	Name string
+	Limit float32
+}
+
+type UpdateBudget struct{
+	BudgetID string 
+	UserID string 
+	Name *string 
+	Limit *float64 
+	Start *string
+	End *string
+}
+type UpdateCategory struct{
+	UserID string
+	BudgetID string
+	CategoryID string
+	Name *string
+	Limit *float64
 }
